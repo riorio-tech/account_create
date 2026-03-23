@@ -1,0 +1,15 @@
+# Render.com 用（Docker なし）
+# ダッシュボード: New → Blueprint → このリポジトリを接続
+# デプロイ後、Environment に ANTHROPIC_API_KEY などを手動追加してください（秘密は Git に書かない）
+
+services:
+  - type: web
+    name: agent2-demo
+    runtime: python
+    plan: free
+    rootDir: agent2
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn demo.server:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.12.0"

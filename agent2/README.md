@@ -160,6 +160,52 @@ uvicorn demo.server:app --reload --host 127.0.0.1 --port 8765
 
 ---
 
+## クラウドにデプロイする（Docker なし）
+
+デモは **1 つのプロセスで HTML + API をまとめて配信**するので、**常時起動の Web サービス**に `uvicorn` を載せればよいです（Vercel のようなサーバーレス専用サービスは向きません）。
+
+### 共通でやること
+
+| 項目 | 内容 |
+|------|------|
+| **作業ディレクトリ** | ホスティング側で **`agent2`** をルートにする（モノレポのときは「Root Directory」等で指定）。 |
+| **インストール** | `pip install -r requirements.txt` |
+| **起動コマンド** | `uvicorn demo.server:app --host 0.0.0.0 --port $PORT`（`$PORT` はサービスが渡す環境変数。Railway / Render ともにあります） |
+| **環境変数** | ローカルの `agent2/.env` と同じキーを、**ホスティングのダッシュボード**で設定（Git にコミットしない）。最低限 `ANTHROPIC_API_KEY`。エージェント①モードなら `AGENT1_OUTPUT_PATH=fixtures/sample_input.json` のように **リポジトリ内の相対パス**が使える。 |
+| **注意** | 無料枠は **スリープ** があり、初回アクセスが遅いことがあります。`output/` はディスクが揮発的なプランだと **再起動で消える** 場合があります。 |
+
+### Render（おすすめ・手順が単純）
+
+1. [render.com](https://render.com) でアカウント作成。  
+2. **New → Blueprint** → GitHub リポジトリを選択。  
+3. リポジトリルートの **`render.yaml`** が読み込まれます（なければ **New → Web Service** で手動でも可）。  
+4. **Environment** タブで `ANTHROPIC_API_KEY` を追加（必要なら `AGENT1_OUTPUT_PATH`、Google スプレッドシート用の変数も）。  
+5. デプロイ完了後、表示された `https://xxxx.onrender.com` を開く。
+
+手動で Web Service を作る場合の例:
+
+- **Root Directory:** `agent2`  
+- **Build Command:** `pip install -r requirements.txt`  
+- **Start Command:** `uvicorn demo.server:app --host 0.0.0.0 --port $PORT`  
+
+### Railway
+
+1. [railway.app](https://railway.app) でプロジェクト作成 → **Deploy from GitHub**。  
+2. サービス設定で **Root Directory を `agent2`** にする。  
+3. **Settings → Deploy → Custom Start Command:**  
+   `uvicorn demo.server:app --host 0.0.0.0 --port $PORT`  
+4. **Variables** に `.env` 相当を登録。
+
+（Railway は UI が変わることがあるため、見当たらない項目は「Python + Start Command + Root」で検索してください。）
+
+### うまくいかないとき
+
+- **ビルドは成功したが真っ白 / 502:** `Start Command` のホストが `127.0.0.1` になっていないか確認（**`0.0.0.0`** が必要）。  
+- **キー未設定系のエラー:** ダッシュボードの変数名が `ANTHROPIC_API_KEY` と一致しているか、デプロイ後に **Redeploy** したか確認。  
+- **設計実行が途中で切れる:** 無料プランなどでは **HTTP タイムアウト**が短いことがあります。Claude 呼び出しが長い場合は有料プランやタイムアウト設定の緩いサービスを検討してください。  
+
+---
+
 ## GitHub Actions 設定
 
 ワークフロー: `.github/workflows/agent2.yml`（リポジトリルート）
