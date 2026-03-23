@@ -43,8 +43,7 @@
       <code>http://127.0.0.1:8765</code>
     </div>
     <p>
-      <strong>クラウドに載せる場合</strong>は、Railway / Render / Fly.io など「常時起動のコンテナ」向けです。リポジトリの
-      <code>agent2/Dockerfile</code> を参照してください。
+      <strong>クラウドに載せる場合</strong>は、常時起動できるホスティング上で <code>uvicorn demo.server:app</code> を動かす形になります。Docker は必須ではありません（各サービスの Python デプロイ手順に従ってください）。
     </p>
     <p>
       ドキュメント: リポジトリの <code>README.md</code> と <code>agent2/README.md</code>
