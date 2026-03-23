@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Agent2 — コンテンツ設計</title>
+    <link rel="stylesheet" href="/static/styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,600;0,9..40,700&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="bg-grid" aria-hidden="true"></div>
+
+    <header class="top">
+      <div class="brand">
+        <span class="logo" aria-hidden="true">②</span>
+        <div>
+          <h1>コンテンツ設計書をつくる</h1>
+          <p class="sub">API キーはサーバーの <code>.env</code> のみ（ブラウザには出ません）</p>
+        </div>
+      </div>
+      <div class="pill" id="header-pill">接続確認中…</div>
+    </header>
+
+    <main class="flow">
+      <section class="panel action-panel" aria-labelledby="run-title">
+        <div class="step-head">
+          <span class="step-num" aria-hidden="true">▶</span>
+          <h2 id="run-title">実行</h2>
+        </div>
+        <p class="action-lead">
+          ボタンで <code>run_agent2.py</code> を実行し、<code>output/content_brief.json</code> を更新。設定していれば
+          <strong>Google スプレッドシート</strong>にも追記されます。
+        </p>
+        <fieldset class="mode-fieldset">
+          <legend class="sr-only">入力モード</legend>
+          <label class="mode-label"
+            ><input type="radio" name="input-mode" value="agent1" checked /> エージェント①の JSON（<code>AGENT1_OUTPUT_PATH</code>）</label
+          >
+          <label class="mode-label"
+            ><input type="radio" name="input-mode" value="natural_language" /> 自然言語だけ（商品をざっくり説明）</label
+          >
+        </fieldset>
+        <label class="nl-label" for="nl-input">自然言語モードのとき</label>
+        <textarea
+          id="nl-input"
+          class="nl-textarea"
+          rows="4"
+          placeholder="例: 在宅ワーカー向けのマッサージガンみたいな疲労回復ガジェットを売りたい"
+        ></textarea>
+        <button type="button" class="btn-cta" id="btn-run">設計書をつくる</button>
+        <p class="action-note" id="run-note"></p>
+      </section>
+
+      <div class="alert alert-error" id="alert-error" role="alert" hidden></div>
+
+      <section class="panel result-panel" aria-labelledby="result-title">
+        <div class="step-head">
+          <span class="step-num" aria-hidden="true">≡</span>
+          <h2 id="result-title">結果</h2>
+        </div>
+        <p class="result-summary" id="result-summary">まだ実行していません。</p>
+        <div id="briefs-root" class="briefs"></div>
+      </section>
+
+      <p class="mcp-note inline-note">
+        <strong>Supabase</strong> はこのアプリから保存しません。必要なら Cursor の <strong>Supabase MCP</strong> で
+        <code>content_briefs</code> に反映（<code>docs/supabase_mcp.md</code>）。
+      </p>
+
+      <details class="panel dev-details">
+        <summary>詳細（入力一覧・ログ・起動コマンド）</summary>
+        <div class="dev-inner">
+          <div class="dev-row">
+            <button type="button" class="btn-ghost" id="btn-preview">入力商品を一覧表示</button>
+            <button type="button" class="btn-ghost" id="btn-refresh-briefs">結果を再読み込み</button>
+          </div>
+          <div id="input-preview" class="preview-box" aria-live="polite">「入力商品を一覧表示」でここに表示されます。</div>
+          <details class="logs" id="logs-wrap" hidden>
+            <summary>実行ログ（テキスト）</summary>
+            <pre id="run-logs"></pre>
+          </details>
+          <p class="foot-cmd">
+            起動: <code>uvicorn demo.server:app --host 127.0.0.1 --port 8765</code>（<code>agent2</code> で）。<code>WinError 10013</code> のときは 8765 が使用中なので <code>--port 8766</code> を試す。
+          </p>
+        </div>
+      </details>
+    </main>
+    <script src="/static/app.js" type="module"></script>
+  </body>
+</html>

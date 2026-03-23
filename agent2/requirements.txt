@@ -1,0 +1,8 @@
+anthropic
+python-dotenv
+gspread
+google-auth
+fastapi
+uvicorn[standard]
+pytest
+pytest-mock

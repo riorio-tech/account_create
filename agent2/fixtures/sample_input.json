@@ -1,0 +1,41 @@
+[
+  {
+    "product_id": "prod_001",
+    "product_name": "マッサージガン Pro",
+    "category": "ガジェット",
+    "price": 8980,
+    "total_score": 82.5,
+    "trend_label": "急騰",
+    "why_selling": "在宅ワーク疲れによる需要が急増している",
+    "appeal_axis": ["疲労回復", "手軽さ", "プロ仕様"],
+    "target_persona": "30代男性、デスクワーカー",
+    "content_hint": "使用前後の変化を見せる構成が刺さる",
+    "risk": "類似品が多く差別化が必要"
+  },
+  {
+    "product_id": "prod_002",
+    "product_name": "セラミドUVクリーム",
+    "category": "美容",
+    "price": 3480,
+    "total_score": 74.2,
+    "trend_label": "上昇",
+    "why_selling": "夏前の紫外線対策需要とスキンケア意識の高まり",
+    "appeal_axis": ["保湿", "UV対策", "コスパ"],
+    "target_persona": "20代女性、美容初心者",
+    "content_hint": "朝のルーティン動画に自然に組み込む構成",
+    "risk": "競合品が多いため成分訴求が必要"
+  },
+  {
+    "product_id": "prod_003",
+    "product_name": "もち麦グラノーラ",
+    "category": "食品",
+    "price": 1980,
+    "total_score": 65.0,
+    "trend_label": "上昇",
+    "why_selling": "腸活ブームとダイエット需要の重なり",
+    "appeal_axis": ["腸活", "置き換えダイエット", "食べやすい"],
+    "target_persona": "30代女性、健康意識高め",
+    "content_hint": "実際に食べてリアクションする動画が高CVR",
+    "risk": "飽きられやすいため継続的な訴求が必要"
+  }
+]

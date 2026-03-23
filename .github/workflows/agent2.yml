@@ -1,0 +1,39 @@
+# GitHub Secrets（リポジトリ Settings → Secrets and variables → Actions）:
+#   ANTHROPIC_API_KEY
+#   AGENT1_OUTPUT_PATH
+# Supabase は MCP / 手動で反映（Python からは INSERT しない）
+
+name: Agent2
+
+on:
+  schedule:
+    # 毎日 JST 09:10（UTC 00:10）
+    - cron: "10 0 * * *"
+  workflow_dispatch:
+
+jobs:
+  run-agent2:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: agent2
+    env:
+      ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+      AGENT1_OUTPUT_PATH: ${{ secrets.AGENT1_OUTPUT_PATH }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: "pip"
+          cache-dependency-path: agent2/requirements.txt
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run agent2
+        run: python run_agent2.py

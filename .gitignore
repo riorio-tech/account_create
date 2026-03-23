@@ -1,0 +1,34 @@
+# 秘密情報（必ずコミットしない）
+.env
+**/.env
+*.pem
+*credentials*.json
+service_account*.json
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.Python
+.venv/
+venv/
+env/
+
+# テスト・キャッシュ
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+htmlcov/
+
+# 生成物・一時ファイル
+agent2/output/
+*.tmp
+
+# エディタ・OS
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Cursor（ローカル MCP 設定に秘密が入り得る）
+.cursor/mcp.json
