@@ -1,0 +1,8 @@
+{
+  "name": "account-create",
+  "private": true,
+  "description": "Static landing for Vercel; Python app lives in agent2/",
+  "scripts": {
+    "build": "node -e \"require('fs').accessSync('public/index.html'); console.log('ok');\""
+  }
+}

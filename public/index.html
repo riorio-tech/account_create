@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>account_create</title>
+    <style>
+      :root {
+        color-scheme: dark light;
+        font-family: system-ui, sans-serif;
+        line-height: 1.6;
+        max-width: 42rem;
+        margin: 2rem auto;
+        padding: 0 1.25rem;
+      }
+      code {
+        font-size: 0.9em;
+        padding: 0.15em 0.4em;
+        border-radius: 4px;
+        background: rgba(127, 127, 127, 0.15);
+      }
+      a {
+        color: #2563eb;
+      }
+      .note {
+        border-left: 4px solid #f59e0b;
+        padding-left: 1rem;
+        margin: 1.5rem 0;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>account_create</h1>
+    <p>
+      このページは <strong>Vercel 用の静的ランディング</strong>です。リポジトリのメインアプリは
+      <code>agent2/</code> の <strong>FastAPI + uvicorn</strong>（ローカル API・長時間の Claude 呼び出し・サブプロセス）のため、
+      <strong>そのままでは Vercel のサーバーレスだけでは同じ UI は動きません</strong>（404 やタイムアウトの原因になります）。
+    </p>
+    <div class="note">
+      <strong>ローカルでデモ UI を使う:</strong><br />
+      <code>cd agent2</code> →
+      <code>uvicorn demo.server:app --host 127.0.0.1 --port 8765</code> → ブラウザで
+      <code>http://127.0.0.1:8765</code>
+    </div>
+    <p>
+      <strong>クラウドに載せる場合</strong>は、Railway / Render / Fly.io など「常時起動のコンテナ」向けです。リポジトリの
+      <code>agent2/Dockerfile</code> を参照してください。
+    </p>
+    <p>
+      ドキュメント: リポジトリの <code>README.md</code> と <code>agent2/README.md</code>
+    </p>
+  </body>
+</html>

@@ -24,6 +24,9 @@ htmlcov/
 agent2/output/
 *.tmp
 
+# Node（Vercel 用の最小 package.json）
+node_modules/
+
 # エディタ・OS
 .idea/
 .vscode/
