@@ -235,3 +235,46 @@ GitHub の **Settings → Secrets and variables → Actions → New repository s
 cd agent2
 pytest tests/
 ```
+
+---
+
+## Slack投稿から日報を自動生成する
+
+Slack のエクスポートデータ（JSON）から、**自分の投稿だけ**を抽出して、日ごとの Markdown 日報を自動生成できます。  
+日報には以下が入ります。
+
+- 1日の投稿サマリー（投稿数・文字数・時間帯・チャンネル）
+- 何をしていたか（完了報告/相談/情報共有などの推定）
+- 思考傾向（仮説検証志向、改善志向などのシグナル）
+- 主要キーワードと代表投稿
+
+### 入力データ
+
+- Slack 標準エクスポートのディレクトリを想定
+  - 例: `slack_export/general/2026-03-24.json`
+  - 例: `slack_export/dev/2026-03-24.json`
+- あるいは単一 JSON ファイルを `--export-path` に渡しても動作します。
+
+### 実行例
+
+```bash
+cd agent2
+python slack_daily_report.py \
+  --export-path ./slack_export \
+  --user-id U01234567 \
+  --output-dir ./output/slack_daily_reports \
+  --tz-offset-hours 9 \
+  --start-date 2026-03-01 \
+  --end-date 2026-03-31
+```
+
+### 出力
+
+- `output/slack_daily_reports/README.md`（全体サマリー）
+- `output/slack_daily_reports/YYYY-MM-DD.md`（日別レポート）
+
+### 主要オプション
+
+- `--user-id`: 自分の Slack User ID（必須）
+- `--start-date` / `--end-date`: 対象期間（`YYYY-MM-DD`）
+- `--tz-offset-hours`: 集計タイムゾーン（JST は `9`）
